@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\StudentImportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
+use App\Http\Controllers\Student\ScanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,6 +18,11 @@ Route::get('/', function () {
 // Area siswa.
 Route::middleware(['auth', 'role:siswa'])->group(function () {
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/scan', [ScanController::class, 'index'])->name('scan.index');
+    Route::post('/scan', [ScanController::class, 'store'])
+        ->middleware('throttle:30,1')
+        ->name('scan.store');
 });
 
 // Area admin.

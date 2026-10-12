@@ -291,7 +291,7 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
 - [x] Admin: CRUD siswa (auto-generate akun, password = NIS)
 - [x] Admin: import siswa CSV/Excel (kolom `kode_kelas`)
 - [x] Pola jadwal + command generate sesi + QR token
-- [ ] Halaman scan siswa + endpoint validasi
+- [x] Halaman scan siswa + endpoint validasi
 - [ ] Dashboard/rekap + export Excel & PDF
 - [ ] Testing lokal
 - [ ] Konsep & desain UI/UX
@@ -335,6 +335,25 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
 - QR library: **`simplesoftwareio/simple-qrcode`** — format **SVG** (tanpa Imagick/PNG).
 - Halaman: `admin/schedules/{index,create,edit,sessions}`, `admin/sessions/{show,print}`.
 - Test: `ScheduleTest` (8) + `GenerateScheduleSessionsTest` (3). Total suite **59 test**.
+
+### Scan & Validasi (selesai — INTI SISTEM)
+- **Service `AttendanceScanner`** + DTO `ScanResult` — logika validasi terpisah & teruji.
+- Alur validasi (5 langkah):
+  1. Token cocok ke sesi aktif (`qr_token_aktif`).
+  2. Siswa terdaftar di kelas sesi (`class_student`).
+  3. Window waktu: `sekarang < jam_mulai - toleransi` → tolak; `> jam_selesai` → tolak.
+  4. Status: `≤ jam_mulai + toleransi` → `hadir`, else `telat`.
+  5. Anti duplikat — cek query + tangkap `UniqueConstraintViolationException` (race-safe).
+- **Halaman scan siswa** (`/scan`): kamera via **`html5-qrcode`** (CDN).
+  - "Hanya kamera" (sesuai keputusan) — tanpa input manual.
+  - Auto-submit token ke `POST /scan`; feedback sukses/gagal; cooldown anti spam.
+  - Menampilkan **sesi hari ini** untuk kelas siswa.
+- **Endpoint `POST /scan`** (throttle:30,1) → JSON result ke halaman.
+- **Dashboard siswa**: sapaan, rekap singkat (hadir/telat/izin/sakit), sesi hari ini, tombol scan.
+- Route: `scan.index`, `scan.store`. Menu siswa: Dashboard, Scan QR.
+- Test: `ScanTest` (10) — hadir, telat, terlalu awal, sudah selesai, token tak dikenal,
+  tidak terdaftar, duplikat, token nonaktif. Total suite **69 test**.
+- Verifikasi end-to-end DB dev: scan pertama `hadir`, scan kedua ditolak (anti duplikat).
 
 ### Auth & Role (selesai)
 - **Laravel Breeze** (stack Blade) terinstall.

@@ -29,6 +29,9 @@
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('scan.index')" :active="request()->routeIs('scan.*')">
+                            {{ __('Scan QR') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -98,6 +101,9 @@
             @else
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('scan.index')" :active="request()->routeIs('scan.*')">
+                    {{ __('Scan QR') }}
                 </x-responsive-nav-link>
             @endif
         </div>
