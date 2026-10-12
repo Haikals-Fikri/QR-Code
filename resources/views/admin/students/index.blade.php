@@ -4,10 +4,16 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Kelola Siswa') }}
             </h2>
-            <a href="{{ route('admin.students.create') }}"
-               class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
-                + Tambah Siswa
-            </a>
+            <div class="flex items-center gap-2">
+                <a href="{{ route('admin.students.import.create') }}"
+                   class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-50">
+                    Import
+                </a>
+                <a href="{{ route('admin.students.create') }}"
+                   class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
+                    + Tambah Siswa
+                </a>
+            </div>
         </div>
     </x-slot>
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ClassRoomController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\StudentImportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('classes', ClassRoomController::class)
         ->parameters(['classes' => 'classRoom'])
         ->except('show');
+
+    Route::get('students/import', [StudentImportController::class, 'create'])->name('students.import.create');
+    Route::post('students/import', [StudentImportController::class, 'store'])->name('students.import.store');
+    Route::get('students/import/template', [StudentImportController::class, 'template'])->name('students.import.template');
 
     Route::resource('students', StudentController::class)
         ->except('show');

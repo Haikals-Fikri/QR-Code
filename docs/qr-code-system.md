@@ -289,7 +289,7 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
 - [x] Auth + role (Breeze)
 - [x] Admin: CRUD kelas
 - [x] Admin: CRUD siswa (auto-generate akun, password = NIS)
-- [ ] Admin: import siswa CSV/Excel
+- [x] Admin: import siswa CSV/Excel (kolom `kode_kelas`)
 - [ ] Pola jadwal + command generate sesi + QR token
 - [ ] Halaman scan siswa + endpoint validasi
 - [ ] Dashboard/rekap + export Excel & PDF
@@ -310,6 +310,16 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
 ### Catatan Operasional
 - **Jangan `pkill` server dev** (`artisan serve`) — bisa meninggalkan lock tabel `sessions`
   di MariaDB & membuat test hang. Hentikan dengan Ctrl+C.
+
+### Import Siswa (selesai)
+- Library: **`maatwebsite/excel` v4** (butuh `ext-gd` + `ext-iconv`, sudah di-enable di php.ini).
+- Route: `admin.students.import.create|store|template`.
+- File: `StudentsImport` (ToCollection + WithHeadingRow + WithValidation + SkipsOnFailure),
+  `StudentTemplateExport` (template .xlsx), `StudentImportController`.
+- Kolom: `nis`(wajib, unik), `nama`(wajib), `email`(wajib, unik), `phone`(opsi), `kode_kelas`(opsi).
+- **`kode_kelas`** → otomatis daftarkan siswa ke kelas jika kode cocok.
+- Password awal = NIS. Import **parsial**: baris valid tetap masuk, baris gagal dilaporkan.
+- Halaman import menampilkan error per baris + tombol unduh template.
 
 ### Auth & Role (selesai)
 - **Laravel Breeze** (stack Blade) terinstall.
