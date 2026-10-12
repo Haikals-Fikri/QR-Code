@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ClassRoomController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
@@ -17,6 +18,10 @@ Route::middleware(['auth', 'role:siswa'])->group(function () {
 // Area admin.
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+
+    Route::resource('classes', ClassRoomController::class)
+        ->parameters(['classes' => 'classRoom'])
+        ->except('show');
 });
 
 Route::middleware('auth')->group(function () {
