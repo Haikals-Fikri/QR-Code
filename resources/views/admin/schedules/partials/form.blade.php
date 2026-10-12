@@ -4,7 +4,7 @@
     <div class="sm:col-span-2">
         <x-input-label for="class_id" :value="__('Kelas')" />
         <select id="class_id" name="class_id"
-                class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                class="mt-1 block w-full border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-lg shadow-sm" required>
             <option value="">— Pilih Kelas —</option>
             @foreach ($classes as $class)
                 <option value="{{ $class->id }}" @selected(old('class_id', $schedule?->class_id) == $class->id)>
@@ -18,7 +18,7 @@
     <div>
         <x-input-label for="hari" :value="__('Hari')" />
         <select id="hari" name="hari"
-                class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                class="mt-1 block w-full border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-lg shadow-sm" required>
             @foreach (['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'] as $hari)
                 <option value="{{ $hari }}" @selected(old('hari', $schedule?->hari) === $hari)>
                     {{ ucfirst($hari) }}
@@ -66,5 +66,5 @@
 
 <div class="flex items-center gap-4 mt-6">
     <x-primary-button>{{ __('Simpan') }}</x-primary-button>
-    <a href="{{ route('admin.schedules.index') }}" class="text-sm text-gray-600 hover:text-gray-900">Batal</a>
+    <a href="{{ route('admin.schedules.index') }}" class="text-sm text-gray-500 hover:text-gray-900">Batal</a>
 </div>

@@ -1,56 +1,58 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Kelola Kelas') }}
-            </h2>
-            <a href="{{ route('admin.classes.create') }}"
-               class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
+        <div class="flex items-center justify-between gap-4">
+            <div>
+                <h2 class="font-semibold text-xl text-gray-900 leading-tight">
+                    {{ __('Kelola Kelas') }}
+                </h2>
+                <p class="text-sm text-gray-500 mt-1">Total {{ $classes->count() }} kelas.</p>
+            </div>
+            <a href="{{ route('admin.classes.create') }}" class="btn-primary">
                 + Tambah Kelas
             </a>
         </div>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
             @if (session('status'))
-                <div class="mb-4 p-4 bg-green-100 text-green-800 rounded-md">
-                    {{ session('status') }}
-                </div>
+                <x-alert>{{ session('status') }}</x-alert>
             @endif
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+            <div class="card">
+                <div class="card-body">
                     @if ($classes->isEmpty())
                         <p class="text-sm text-gray-500">Belum ada kelas. Tambahkan kelas terlebih dahulu.</p>
                     @else
                         <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200 text-sm">
+                            <table class="table-clean">
                                 <thead>
-                                    <tr class="text-left text-gray-500">
-                                        <th class="px-4 py-3 font-medium">Kode</th>
-                                        <th class="px-4 py-3 font-medium">Nama Kelas</th>
-                                        <th class="px-4 py-3 font-medium">Guru</th>
-                                        <th class="px-4 py-3 font-medium">Jml Siswa</th>
-                                        <th class="px-4 py-3 font-medium text-right">Aksi</th>
+                                    <tr>
+                                        <th>Kode</th>
+                                        <th>Nama Kelas</th>
+                                        <th>Guru</th>
+                                        <th class="text-center">Jml Siswa</th>
+                                        <th class="text-right">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-100">
+                                <tbody>
                                     @foreach ($classes as $class)
                                         <tr>
-                                            <td class="px-4 py-3 font-mono text-gray-700">{{ $class->kode }}</td>
-                                            <td class="px-4 py-3">{{ $class->nama }}</td>
-                                            <td class="px-4 py-3">{{ $class->guru?->name ?? '-' }}</td>
-                                            <td class="px-4 py-3">{{ $class->students_count }}</td>
-                                            <td class="px-4 py-3">
-                                                <div class="flex items-center justify-end gap-2">
+                                            <td class="font-mono text-gray-700">{{ $class->kode }}</td>
+                                            <td class="font-medium text-gray-900">{{ $class->nama }}</td>
+                                            <td class="text-gray-600">{{ $class->guru?->name ?? '-' }}</td>
+                                            <td class="text-center">
+                                                <span class="badge bg-gray-100 text-gray-700">{{ $class->students_count }}</span>
+                                            </td>
+                                            <td>
+                                                <div class="flex items-center justify-end gap-3">
                                                     <a href="{{ route('admin.classes.edit', $class) }}"
-                                                       class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                                       class="text-brand-600 hover:text-brand-800 font-medium">Edit</a>
                                                     <form method="POST" action="{{ route('admin.classes.destroy', $class) }}"
                                                           onsubmit="return confirm('Hapus kelas ini? Semua jadwal & absensi terkait akan ikut terhapus.');">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="text-red-600 hover:text-red-900">Hapus</button>
+                                                        <button type="submit" class="text-red-600 hover:text-red-800 font-medium">Hapus</button>
                                                     </form>
                                                 </div>
                                             </td>

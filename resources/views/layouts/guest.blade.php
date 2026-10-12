@@ -5,26 +5,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'QR-Code System') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gradient-to-b from-brand-50 to-gray-50">
+            <div class="flex flex-col items-center gap-2">
+                <a href="/" class="flex flex-col items-center gap-3">
+                    <x-application-logo class="w-16 h-16" />
+                    <span class="font-bold text-xl text-gray-900 tracking-tight">QR-Code System</span>
                 </a>
+                <p class="text-sm text-gray-500">Sistem Absensi QR</p>
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <div class="w-full sm:max-w-md mt-8 px-6 py-6 bg-white shadow-card border border-gray-100 overflow-hidden sm:rounded-card">
                 {{ $slot }}
             </div>
+
+            <p class="mt-6 text-xs text-gray-400">
+                &copy; {{ date('Y') }} QR-Code System
+            </p>
         </div>
     </body>
 </html>

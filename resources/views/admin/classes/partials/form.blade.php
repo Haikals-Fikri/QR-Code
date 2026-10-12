@@ -18,7 +18,7 @@
     <div>
         <x-input-label for="guru_id" :value="__('Guru Pengajar (opsional)')" />
         <select id="guru_id" name="guru_id"
-                class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                class="mt-1 block w-full border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-lg shadow-sm">
             <option value="">— Tidak ada —</option>
             @foreach ($gurus as $id => $name)
                 <option value="{{ $id }}" @selected(old('guru_id', $classRoom?->guru_id) == $id)>{{ $name }}</option>
@@ -30,5 +30,5 @@
 
 <div class="flex items-center gap-4 mt-6">
     <x-primary-button>{{ __('Simpan') }}</x-primary-button>
-    <a href="{{ route('admin.classes.index') }}" class="text-sm text-gray-600 hover:text-gray-900">Batal</a>
+    <a href="{{ route('admin.classes.index') }}" class="text-sm text-gray-500 hover:text-gray-900">Batal</a>
 </div>

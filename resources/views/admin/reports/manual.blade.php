@@ -1,28 +1,28 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="font-semibold text-xl text-gray-900 leading-tight">
                 {{ __('Absensi Manual (Izin / Sakit)') }}
             </h2>
-            <a href="{{ route('admin.reports.index') }}" class="text-sm text-gray-600 hover:text-gray-900">Kembali</a>
+            <a href="{{ route('admin.reports.index') }}" class="btn-secondary">Kembali</a>
         </div>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-8">
+        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8 space-y-4">
             @if (session('status'))
-                <div class="mb-4 p-4 bg-green-100 text-green-800 rounded-md">{{ session('status') }}</div>
+                <x-alert>{{ session('status') }}</x-alert>
             @endif
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+            <div class="card">
+                <div class="card-body">
                     <form method="POST" action="{{ route('admin.reports.manual.store') }}" class="space-y-5">
                         @csrf
 
                         <div>
                             <x-input-label for="student_id" :value="__('Siswa')" />
                             <select id="student_id" name="student_id" required
-                                    class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                                    class="mt-1 block w-full border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-lg shadow-sm">
                                 <option value="">— Pilih Siswa —</option>
                                 @foreach ($students as $student)
                                     <option value="{{ $student->id }}" @selected(old('student_id') == $student->id)>
@@ -36,7 +36,7 @@
                         <div>
                             <x-input-label for="session_id" :value="__('Sesi Kelas')" />
                             <select id="session_id" name="session_id" required
-                                    class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                                    class="mt-1 block w-full border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-lg shadow-sm">
                                 <option value="">— Pilih Sesi —</option>
                                 @foreach ($sessions as $session)
                                     <option value="{{ $session->id }}" @selected(old('session_id') == $session->id)>
@@ -50,7 +50,7 @@
                         <div>
                             <x-input-label for="status" :value="__('Status Kehadiran')" />
                             <select id="status" name="status" required
-                                    class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                                    class="mt-1 block w-full border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-lg shadow-sm">
                                 @foreach (['hadir' => 'Hadir', 'telat' => 'Telat', 'izin' => 'Izin', 'sakit' => 'Sakit'] as $value => $label)
                                     <option value="{{ $value }}" @selected(old('status') === $value)>{{ $label }}</option>
                                 @endforeach
@@ -58,7 +58,7 @@
                             <x-input-error :messages="$errors->get('status')" class="mt-2" />
                         </div>
 
-                        <p class="text-xs text-gray-500">
+                        <p class="text-xs text-gray-500 bg-gray-50 rounded-lg p-3">
                             Jika siswa sudah absen untuk sesi ini, data akan diperbarui (ditimpa).
                         </p>
 

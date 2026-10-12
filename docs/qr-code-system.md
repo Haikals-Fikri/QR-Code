@@ -230,9 +230,19 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
 
 ## 7. Status UI/UX
 
-- **Saat ini:** default Blade + Tailwind, belum dipoles.
-- **Rencana:** setelah semua fitur fungsional stabil, saya akan menyusun **beberapa opsi konsep desain** (mis. *clean academic*, *dashboard-first*, *minimal kiosk-style*) beserta referensi, lalu user memilih.
-- Keputusan desain final **dicatat di file ini**.
+- **Konsep terpilih:** **Clean Academic + Minimal/Kiosk (area siswa)**, aksen **Biru/Indigo** (`brand` palette, `#4f46e5`).
+- **Foundation:**
+  - `tailwind.config.js`: palet `brand` (50–950), shadow `card`/`card-hover`, radius `card`.
+  - `resources/css/app.css`: komponen reusable — `.btn`/`.btn-primary`/`.btn-secondary`/`.btn-danger`/`.btn-success`,
+    `.card`/`.card-body`, `.badge-{hadir,telat,izin,sakit,alpha}`, `.table-clean`.
+  - Komponen Blade: `<x-stat-card>`, `<x-alert>`, logo QR kustom, nav-link/responsive-nav-link brand-aware.
+  - Layout: header sticky, footer, guest layout bergradien brand.
+- **Area admin (Clean Academic):** dashboard dengan kartu statistik + sesi hari ini + aksi cepat,
+  tabel bersih (`table-clean`), badge status, tombol konsisten.
+- **Area siswa (Minimal/Kiosk):** kartu sapaan bergradien + tombol scan besar, dashboard ringkas,
+  halaman scan fokus kamera dengan banner hasil besar (ikon sukses/gagal).
+- **Login & welcome** dipoles: branding QR-Code System, teks Indonesia.
+- Semua halaman diverifikasi render 200 (admin & siswa) via dev server.
 
 ---
 
@@ -253,6 +263,8 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
 - Hosting → tunda, uji lokal dulu.
 - Export → Excel + PDF.
 - Laravel versi → **13.35.0** (terbaru saat setup).
+- Desain UI/UX → **Clean Academic** (admin) + **Minimal/Kiosk** (siswa), aksen **indigo**.
+  User meminta detail tiap opsi dulu, lalu memilih opsi 1 (rekomendasi).
 
 ---
 
@@ -293,8 +305,8 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
 - [x] Pola jadwal + command generate sesi + QR token
 - [x] Halaman scan siswa + endpoint validasi
 - [x] Rekap & tracking + export Excel/PDF + kelola izin/sakit
+- [x] Konsep & desain UI/UX (Clean Academic + Minimal area siswa, indigo)
 - [ ] Testing lokal
-- [ ] Konsep & desain UI/UX
 - [ ] Deploy + HTTPS
 
 ### Admin CRUD (selesai)

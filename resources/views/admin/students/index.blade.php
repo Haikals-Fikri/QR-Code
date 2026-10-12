@@ -1,70 +1,71 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Kelola Siswa') }}
-            </h2>
+        <div class="flex items-center justify-between gap-4">
+            <div>
+                <h2 class="font-semibold text-xl text-gray-900 leading-tight">
+                    {{ __('Kelola Siswa') }}
+                </h2>
+                <p class="text-sm text-gray-500 mt-1">Total {{ $students->count() }} siswa terdaftar.</p>
+            </div>
             <div class="flex items-center gap-2">
-                <a href="{{ route('admin.students.import.create') }}"
-                   class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-50">
+                <a href="{{ route('admin.students.import.create') }}" class="btn-secondary">
                     Import
                 </a>
-                <a href="{{ route('admin.students.create') }}"
-                   class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
+                <a href="{{ route('admin.students.create') }}" class="btn-primary">
                     + Tambah Siswa
                 </a>
             </div>
         </div>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
             @if (session('status'))
-                <div class="mb-4 p-4 bg-green-100 text-green-800 rounded-md">
-                    {{ session('status') }}
-                </div>
+                <x-alert>{{ session('status') }}</x-alert>
             @endif
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+            <div class="card">
+                <div class="card-body">
                     @if ($students->isEmpty())
-                        <p class="text-sm text-gray-500">Belum ada siswa.</p>
+                        <p class="text-sm text-gray-500">Belum ada siswa. Tambahkan siswa atau import dari file.</p>
                     @else
                         <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200 text-sm">
+                            <table class="table-clean">
                                 <thead>
-                                    <tr class="text-left text-gray-500">
-                                        <th class="px-4 py-3 font-medium">NIS</th>
-                                        <th class="px-4 py-3 font-medium">Nama</th>
-                                        <th class="px-4 py-3 font-medium">Email</th>
-                                        <th class="px-4 py-3 font-medium">Kelas</th>
-                                        <th class="px-4 py-3 font-medium text-right">Aksi</th>
+                                    <tr>
+                                        <th>NIS</th>
+                                        <th>Nama</th>
+                                        <th>Email</th>
+                                        <th>Kelas</th>
+                                        <th class="text-right">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-100">
+                                <tbody>
                                     @foreach ($students as $student)
                                         <tr>
-                                            <td class="px-4 py-3 font-mono text-gray-700">{{ $student->nis }}</td>
-                                            <td class="px-4 py-3">{{ $student->nama }}</td>
-                                            <td class="px-4 py-3 text-gray-600">{{ $student->user?->email }}</td>
-                                            <td class="px-4 py-3">
-                                                @forelse ($student->classes as $class)
-                                                    <span class="inline-block bg-gray-100 text-gray-700 rounded px-2 py-0.5 text-xs mb-1">
-                                                        {{ $class->nama }}
-                                                    </span>
-                                                @empty
-                                                    <span class="text-gray-400">-</span>
-                                                @endforelse
+                                            <td class="font-mono text-gray-700">{{ $student->nis }}</td>
+                                            <td class="font-medium text-gray-900">{{ $student->nama }}</td>
+                                            <td class="text-gray-600">{{ $student->user?->email }}</td>
+                                            <td>
+                                                <div class="flex flex-wrap gap-1">
+                                                    @forelse ($student->classes as $class)
+                                                        <span class="inline-block bg-brand-50 text-brand-700 ring-1 ring-inset ring-brand-600/20 rounded-full px-2 py-0.5 text-xs font-medium">
+                                                            {{ $class->nama }}
+                                                        </span>
+                                                    @empty
+                                                        <span class="text-gray-400">-</span>
+                                                    @endforelse
+                                                </div>
                                             </td>
-                                            <td class="px-4 py-3">
-                                                <div class="flex items-center justify-end gap-2">
+                                            <td>
+                                                <div class="flex items-center justify-end gap-3">
                                                     <a href="{{ route('admin.students.edit', $student) }}"
-                                                       class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                                       class="text-brand-600 hover:text-brand-800 font-medium">Edit</a>
                                                     <form method="POST" action="{{ route('admin.students.destroy', $student) }}"
                                                           onsubmit="return confirm('Hapus siswa ini beserta akun login-nya?');">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="text-red-600 hover:text-red-900">Hapus</button>
+                                                        <button type="submit" class="text-red-600 hover:text-red-800 font-medium">Hapus</button>
                                                     </form>
                                                 </div>
                                             </td>
