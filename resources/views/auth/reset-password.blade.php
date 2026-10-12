@@ -1,4 +1,6 @@
 <x-guest-layout>
+    <h1 class="text-lg font-bold text-gray-900 text-center mb-6">Atur Ulang Kata Sandi</h1>
+
     <form method="POST" action="{{ route('password.store') }}">
         @csrf
 

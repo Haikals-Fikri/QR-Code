@@ -230,19 +230,22 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
 
 ## 7. Status UI/UX
 
-- **Konsep terpilih:** **Clean Academic + Minimal/Kiosk (area siswa)**, aksen **Biru/Indigo** (`brand` palette, `#4f46e5`).
+- **Konsep terpilih:** **Sidebar kiri + dashboard (SaaS modern)**, aksen **Biru cerah** (`brand` palette, `#2563eb`).
+- **Bahasa:** seluruh antarmuka **Bahasa Indonesia**.
+  - `APP_LOCALE=id` (`.env`, `.env.example`, `config/app.php`).
+  - `lang/id.json` — terjemahan semua teks Breeze/`__()`.
+  - Teks custom di view juga ditulis Indonesia.
 - **Foundation:**
-  - `tailwind.config.js`: palet `brand` (50–950), shadow `card`/`card-hover`, radius `card`.
-  - `resources/css/app.css`: komponen reusable — `.btn`/`.btn-primary`/`.btn-secondary`/`.btn-danger`/`.btn-success`,
-    `.card`/`.card-body`, `.badge-{hadir,telat,izin,sakit,alpha}`, `.table-clean`.
-  - Komponen Blade: `<x-stat-card>`, `<x-alert>`, logo QR kustom, nav-link/responsive-nav-link brand-aware.
-  - Layout: header sticky, footer, guest layout bergradien brand.
-- **Area admin (Clean Academic):** dashboard dengan kartu statistik + sesi hari ini + aksi cepat,
-  tabel bersih (`table-clean`), badge status, tombol konsisten.
-- **Area siswa (Minimal/Kiosk):** kartu sapaan bergradien + tombol scan besar, dashboard ringkas,
-  halaman scan fokus kamera dengan banner hasil besar (ikon sukses/gagal).
-- **Login & welcome** dipoles: branding QR-Code System, teks Indonesia.
+  - `tailwind.config.js`: palet `brand` (biru 50–950) + palet `sidebar` (navy), shadow `card`/`card-hover`, radius `card`.
+  - `resources/css/app.css`: komponen — `.btn-*`, `.card`/`.card-body`, `.badge-*`, `.table-clean`,
+    `.sidebar`, `.sidebar-link`, `.sidebar-link-active`, `.sidebar-section`.
+  - Komponen Blade: `<x-page-header>`, `<x-stat-card>`, `<x-alert>`, `<x-sidebar-link>`, logo QR kustom.
+  - Layout: `layouts/app.blade.php` (sidebar kiri + topbar sticky, offset `lg:pl-64`),
+    `layouts/sidebar.blade.php` (menu admin/siswa, profil+keluar di bawah), guest layout bergradien brand.
+- **Layout halaman:** view memakai `<x-slot name="header">` (judul via `<x-page-header>`) +
+  `<x-slot name="actions">` (tombol aksi di topbar, otomatis turun ke bawah pada layar kecil).
 - Semua halaman diverifikasi render 200 (admin & siswa) via dev server.
+- **79 test lolos** (191 assertion).
 
 ---
 
@@ -263,8 +266,8 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
 - Hosting → tunda, uji lokal dulu.
 - Export → Excel + PDF.
 - Laravel versi → **13.35.0** (terbaru saat setup).
-- Desain UI/UX → **Clean Academic** (admin) + **Minimal/Kiosk** (siswa), aksen **indigo**.
-  User meminta detail tiap opsi dulu, lalu memilih opsi 1 (rekomendasi).
+- Desain UI/UX → **Sidebar kiri SaaS modern** + aksen **biru cerah**; antarmuka **Bahasa Indonesia**.
+  User awalnya minta detail tiap opsi, lalu minta diganti ke sidebar + biru cerah saat revisi.
 
 ---
 

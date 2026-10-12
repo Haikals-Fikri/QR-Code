@@ -1,19 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-900 leading-tight">
-            {{ __('Tambah Siswa') }}
-        </h2>
+        <x-page-header title="Tambah Siswa" subtitle="Akun login dibuat otomatis (password = NIS)." />
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
-            <div class="card">
-                <div class="card-body">
-                    <form method="POST" action="{{ route('admin.students.store') }}">
-                        @csrf
-                        @include('admin.students.partials.form')
-                    </form>
-                </div>
+    <div class="max-w-2xl">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" action="{{ route('admin.students.store') }}">
+                    @csrf
+                    @include('admin.students.partials.form')
+                </form>
             </div>
         </div>
     </div>

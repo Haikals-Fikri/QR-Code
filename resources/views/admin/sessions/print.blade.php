@@ -33,7 +33,7 @@
         .actions { margin-top: 24px; }
         .actions button {
             padding: 10px 24px; font-size: 14px; font-weight: 600;
-            border: none; border-radius: 8px; background: #111827; color: #fff; cursor: pointer;
+            border: none; border-radius: 8px; background: #2563eb; color: #fff; cursor: pointer;
         }
         @media print {
             body { background: #fff; padding: 0; }

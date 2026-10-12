@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer components {
-    /* Tombol utama — aksen brand (indigo akademik). */
+    /* Tombol utama — aksen brand (biru cerah). */
     .btn {
         @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg
                text-sm font-semibold transition duration-150 ease-in-out
@@ -80,5 +80,23 @@
 
     .table-clean tbody td {
         @apply px-4 py-3 text-gray-700;
+    }
+
+    /* Sidebar (dark navy). */
+    .sidebar {
+        @apply bg-sidebar text-sidebar-text;
+    }
+
+    .sidebar-link {
+        @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-sidebar-text
+               transition duration-150 hover:bg-sidebar-hover hover:text-white;
+    }
+
+    .sidebar-link-active {
+        @apply bg-brand-600 text-white shadow-sm hover:bg-brand-600;
+    }
+
+    .sidebar-section {
+        @apply px-3 pt-5 pb-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-500;
     }
 }

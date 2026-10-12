@@ -1,5 +1,7 @@
 <x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
+    <h1 class="text-lg font-bold text-gray-900 text-center mb-1">Konfirmasi Kata Sandi</h1>
+
+    <div class="mb-4 mt-3 text-sm text-gray-600">
         {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
     </div>
 

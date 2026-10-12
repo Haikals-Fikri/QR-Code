@@ -18,12 +18,12 @@ $tag = $href ? 'a' : 'div';
 @endphp
 
 <{{ $tag }} @if($href) href="{{ $href }}" @endif
-    class="card card-body flex items-center gap-4 {{ $href ? 'hover:shadow-card-hover transition-shadow' : '' }}">
+    class="card card-body flex items-center gap-4 {{ $href ? 'hover:shadow-card-hover hover:-translate-y-0.5 transition' : '' }}">
     <span class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl {{ $toneClass }}">
         {!! $icon !!}
     </span>
     <div class="min-w-0">
-        <p class="text-2xl font-bold text-gray-900 leading-tight">{{ $value }}</p>
         <p class="text-xs font-medium uppercase tracking-wide text-gray-500 truncate">{{ $label }}</p>
+        <p class="text-2xl font-bold text-gray-900 leading-tight">{{ $value }}</p>
     </div>
 </{{ $tag }}>
