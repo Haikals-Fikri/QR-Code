@@ -290,7 +290,7 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
 - [x] Admin: CRUD kelas
 - [x] Admin: CRUD siswa (auto-generate akun, password = NIS)
 - [x] Admin: import siswa CSV/Excel (kolom `kode_kelas`)
-- [ ] Pola jadwal + command generate sesi + QR token
+- [x] Pola jadwal + command generate sesi + QR token
 - [ ] Halaman scan siswa + endpoint validasi
 - [ ] Dashboard/rekap + export Excel & PDF
 - [ ] Testing lokal
@@ -320,6 +320,21 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
 - **`kode_kelas`** → otomatis daftarkan siswa ke kelas jika kode cocok.
 - Password awal = NIS. Import **parsial**: baris valid tetap masuk, baris gagal dilaporkan.
 - Halaman import menampilkan error per baris + tombol unduh template.
+
+### Jadwal & QR (selesai)
+- **CRUD Pola Jadwal** (`/admin/schedules`) per kelas: hari, jam, toleransi, rentang tanggal.
+- **Command `schedule:generate`**:
+  - `--days=30` (default) — berapa hari ke depan.
+  - `--schedule=ID` — hanya satu pola.
+  - Batas mengikuti min(rentang pola, hari ke depan); anti duplikat; tiap sesi dapat `qr_token` unik 64 hex.
+- **Scheduler harian** otomatis (`routes/console.php` → `dailyAt('01:00')`).
+- **Generate manual** via tombol di halaman sesi.
+- **QR sesi** (`/admin/sessions/{id}`): tampil besar di layar/proyektor.
+  - **Cetak/Unduh** (`/admin/sessions/{id}/print`): halaman siap-print untuk ditempel.
+  - **Regenerate token** per sesi.
+- QR library: **`simplesoftwareio/simple-qrcode`** — format **SVG** (tanpa Imagick/PNG).
+- Halaman: `admin/schedules/{index,create,edit,sessions}`, `admin/sessions/{show,print}`.
+- Test: `ScheduleTest` (8) + `GenerateScheduleSessionsTest` (3). Total suite **59 test**.
 
 ### Auth & Role (selesai)
 - **Laravel Breeze** (stack Blade) terinstall.

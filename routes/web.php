@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\ClassRoomController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\ScheduleController;
+use App\Http\Controllers\Admin\ScheduleSessionController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\StudentImportController;
 use App\Http\Controllers\ProfileController;
@@ -31,6 +33,17 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::resource('students', StudentController::class)
         ->except('show');
+
+    Route::get('schedules/{schedule}/sessions', [ScheduleController::class, 'sessions'])->name('schedules.sessions');
+    Route::post('schedules/{schedule}/generate', [ScheduleSessionController::class, 'generate'])->name('schedules.generate');
+
+    Route::resource('schedules', ScheduleController::class)
+        ->parameters(['schedules' => 'schedule'])
+        ->except('show');
+
+    Route::get('sessions/{session}', [ScheduleSessionController::class, 'show'])->name('sessions.show');
+    Route::get('sessions/{session}/print', [ScheduleSessionController::class, 'print'])->name('sessions.print');
+    Route::post('sessions/{session}/regenerate', [ScheduleSessionController::class, 'regenerate'])->name('sessions.regenerate');
 });
 
 Route::middleware('auth')->group(function () {
