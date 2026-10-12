@@ -292,7 +292,7 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
 - [x] Admin: import siswa CSV/Excel (kolom `kode_kelas`)
 - [x] Pola jadwal + command generate sesi + QR token
 - [x] Halaman scan siswa + endpoint validasi
-- [ ] Dashboard/rekap + export Excel & PDF
+- [x] Rekap & tracking + export Excel/PDF + kelola izin/sakit
 - [ ] Testing lokal
 - [ ] Konsep & desain UI/UX
 - [ ] Deploy + HTTPS
@@ -354,6 +354,21 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
 - Test: `ScanTest` (10) — hadir, telat, terlalu awal, sudah selesai, token tak dikenal,
   tidak terdaftar, duplikat, token nonaktif. Total suite **69 test**.
 - Verifikasi end-to-end DB dev: scan pertama `hadir`, scan kedua ditolak (anti duplikat).
+
+### Rekap, Izin/Sakit & Export (selesai)
+- **Service `AttendanceReport`**: `forClass()`, `summarize()` — hitung hadir/telat/izin/sakit
+  + **alpha dinamis** (`total sesi − terisi`) + `% hadir`.
+- **Halaman laporan admin** (`/admin/reports`):
+  - Daftar kelas → rekap per kelas (`reports.class`).
+  - Rekap per siswa (`reports.student`): ringkasan + riwayat absensi.
+- **Absensi manual** (`reports.manual.*`): admin input/ubah status **hadir/telat/izin/sakit**
+  untuk siswa+sesi (pakai `updateOrCreate`).
+- **Export Excel** (`maatwebsite/excel`) → `rekap-{kode}.xlsx`.
+- **Export PDF** (`barryvdh/laravel-dompdf`) → `rekap-{kode}.pdf`.
+- Route: `admin.reports.{index,class,class.excel,class.pdf,student,manual.form,manual.store}`.
+- Menu admin: Dashboard, Kelas, Siswa, Jadwal, **Laporan**.
+- Test: `ReportTest` (10) — hitung alpha, akses, export xlsx/pdf, absensi manual, overwrite.
+  Total suite **79 test**.
 
 ### Auth & Role (selesai)
 - **Laravel Breeze** (stack Blade) terinstall.

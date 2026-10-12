@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ClassRoomController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\ScheduleSessionController;
 use App\Http\Controllers\Admin\StudentController;
@@ -50,6 +51,15 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('sessions/{session}', [ScheduleSessionController::class, 'show'])->name('sessions.show');
     Route::get('sessions/{session}/print', [ScheduleSessionController::class, 'print'])->name('sessions.print');
     Route::post('sessions/{session}/regenerate', [ScheduleSessionController::class, 'regenerate'])->name('sessions.regenerate');
+
+    // Laporan & absensi manual.
+    Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('reports/manual', [ReportController::class, 'manualForm'])->name('reports.manual.form');
+    Route::post('reports/manual', [ReportController::class, 'manualStore'])->name('reports.manual.store');
+    Route::get('reports/classes/{class}/excel', [ReportController::class, 'exportExcel'])->name('reports.class.excel');
+    Route::get('reports/classes/{class}/pdf', [ReportController::class, 'exportPdf'])->name('reports.class.pdf');
+    Route::get('reports/classes/{class}', [ReportController::class, 'classReport'])->name('reports.class');
+    Route::get('reports/students/{student}', [ReportController::class, 'studentReport'])->name('reports.student');
 });
 
 Route::middleware('auth')->group(function () {
