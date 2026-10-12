@@ -19,6 +19,9 @@
                         <x-nav-link :href="route('admin.classes.index')" :active="request()->routeIs('admin.classes.*')">
                             {{ __('Kelas') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.students.index')" :active="request()->routeIs('admin.students.*')">
+                            {{ __('Siswa') }}
+                        </x-nav-link>
                     @else
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
@@ -82,6 +85,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.classes.index')" :active="request()->routeIs('admin.classes.*')">
                     {{ __('Kelas') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.students.index')" :active="request()->routeIs('admin.students.*')">
+                    {{ __('Siswa') }}
                 </x-responsive-nav-link>
             @else
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">

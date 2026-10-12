@@ -287,13 +287,29 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
 - [x] Migrasi semua tabel
 - [x] Model + relasi + factory + seeder
 - [x] Auth + role (Breeze)
-- [ ] Admin: CRUD kelas, siswa, import CSV/Excel
+- [x] Admin: CRUD kelas
+- [x] Admin: CRUD siswa (auto-generate akun, password = NIS)
+- [ ] Admin: import siswa CSV/Excel
 - [ ] Pola jadwal + command generate sesi + QR token
 - [ ] Halaman scan siswa + endpoint validasi
 - [ ] Dashboard/rekap + export Excel & PDF
 - [ ] Testing lokal
 - [ ] Konsep & desain UI/UX
 - [ ] Deploy + HTTPS
+
+### Admin CRUD (selesai)
+- **Kelas** (`/admin/classes`): CRUD lengkap, validasi kode unik, opsi guru dari user admin.
+- **Siswa** (`/admin/students`): CRUD lengkap.
+  - Saat tambah siswa → otomatis buat akun `users` (role=siswa) + `students`.
+  - **Password awal = NIS**.
+  - Pendaftaran kelas via checkbox di form siswa (`class_student` sync).
+  - Hapus siswa ikut menghapus akun login-nya.
+- Route: `admin.classes.*`, `admin.students.*`.
+- Test: `ClassRoomTest` (6), `StudentTest` (6). Total suite 41 test.
+
+### Catatan Operasional
+- **Jangan `pkill` server dev** (`artisan serve`) — bisa meninggalkan lock tabel `sessions`
+  di MariaDB & membuat test hang. Hentikan dengan Ctrl+C.
 
 ### Auth & Role (selesai)
 - **Laravel Breeze** (stack Blade) terinstall.

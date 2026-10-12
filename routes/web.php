@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ClassRoomController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::resource('classes', ClassRoomController::class)
         ->parameters(['classes' => 'classRoom'])
+        ->except('show');
+
+    Route::resource('students', StudentController::class)
         ->except('show');
 });
 
