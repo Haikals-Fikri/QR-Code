@@ -269,12 +269,24 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
 - **Semua migrasi selesai & terpasang (9 tabel):**
   `users` (+kolom role), `students`, `classes`, `class_student`,
   `schedules`, `schedule_sessions`, `attendances`, `cache`, `jobs`.
+- **Model + relasi + factory + seeder selesai.**
+  - Model: `User` (role, isAdmin/isSiswa), `Student`, `ClassRoom` (tabel `classes`),
+    `Schedule`, `ScheduleSession`, `Attendance` — lengkap dengan relasi.
+  - Factory semua model + state `admin()`/`siswa()` di `UserFactory`.
+  - `DatabaseSeeder`: 1 admin, guru+pola jadwal+sesi+absensi dummy,
+    + akun siswa demo (`siswa@qrcode.test` / `password`), admin (`admin@qrcode.test` / `password`).
+
+### Akun Demo (hasil seeding)
+| Role | Email | Password |
+|---|---|---|
+| Admin | admin@qrcode.test | password |
+| Siswa | siswa@qrcode.test | password |
 
 ### Checklist Roadmap
 - [x] Setup proyek + `.env` + MySQL
 - [x] Migrasi semua tabel
-- [ ] Model + relasi + factory/seeder
-- [ ] Auth + role (Breeze)
+- [x] Model + relasi + factory + seeder
+- [x] Auth + role (Breeze)
 - [ ] Admin: CRUD kelas, siswa, import CSV/Excel
 - [ ] Pola jadwal + command generate sesi + QR token
 - [ ] Halaman scan siswa + endpoint validasi
@@ -282,3 +294,20 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
 - [ ] Testing lokal
 - [ ] Konsep & desain UI/UX
 - [ ] Deploy + HTTPS
+
+### Auth & Role (selesai)
+- **Laravel Breeze** (stack Blade) terinstall.
+- **Register publik dihapus** → akun siswa hanya dibuat admin.
+- **Middleware `role`** (`EnsureUserHasRole`) — alias `role`, dipakai:
+  - `/dashboard` → `role:siswa`
+  - `/admin/dashboard` → `role:admin`
+- Redirect setelah login menyesuaikan role:
+  - siswa → `dashboard`
+  - admin → `admin.dashboard`
+- Navigation Blade menyesuaikan menu berdasarkan role.
+- View: `student/dashboard.blade.php`, `admin/dashboard.blade.php`.
+
+### Lingkungan Testing
+- `pdo_sqlite` tidak tersedia di sistem → test pakai **MySQL** DB terpisah: `qr_code_system_test`.
+- Konfigurasi di `phpunit.xml`.
+- **29 test lolos**, termasuk `RoleAccessTest` & `AuthenticationTest` (redirect per role).
