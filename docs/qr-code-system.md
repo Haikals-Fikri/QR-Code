@@ -288,7 +288,10 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
   - Model: `User` (role, isAdmin/isSiswa), `Student`, `ClassRoom` (tabel `classes`),
     `Schedule`, `ScheduleSession`, `Attendance` — lengkap dengan relasi.
   - Factory semua model + state `admin()`/`siswa()` di `UserFactory`.
-  - `DatabaseSeeder`: 1 admin, guru+pola jadwal+sesi+absensi dummy,
+  - **Locale Faker = `id_ID`** (`APP_FAKER_LOCALE`) → data dummy **Bahasa Indonesia**:
+    nama siswa Indonesia (tanpa gelar akademik), kelas = mata pelajaran
+    (`Pemrograman Web`, `Basis Data`, dst.) tanpa duplikat.
+  - `DatabaseSeeder`: 1 admin, pola jadwal+sesi+absensi dummy,
     + akun siswa demo (`siswa@qrcode.test` / `password`), admin (`admin@qrcode.test` / `password`).
 
 ### Akun Demo (hasil seeding)
