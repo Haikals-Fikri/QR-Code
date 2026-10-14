@@ -291,8 +291,10 @@ $persenHadir = $totalSesi ? round(($hadir + $telat) / $totalSesi * 100) : 0;
   - **Locale Faker = `id_ID`** (`APP_FAKER_LOCALE`) → data dummy **Bahasa Indonesia**:
     nama siswa Indonesia (tanpa gelar akademik), kelas = mata pelajaran
     (`Pemrograman Web`, `Basis Data`, dst.) tanpa duplikat.
+  - **Password siswa hasil factory/seeder = NIS** (bukan "password") — sesuai desain sistem.
   - `DatabaseSeeder`: 1 admin, pola jadwal+sesi+absensi dummy,
     + akun siswa demo (`siswa@qrcode.test` / `password`), admin (`admin@qrcode.test` / `password`).
+  - Test regresi: `StudentLoginPasswordTest` (siswa bisa login dgn NIS, demo akun bisa login).
 
 ### Akun Demo (hasil seeding)
 | Role | Email | Password |

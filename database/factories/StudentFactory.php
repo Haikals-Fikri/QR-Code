@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -23,14 +24,19 @@ class StudentFactory extends Factory
         // suffix gelar seperti "M.Kom.", sehingga kita susun manual).
         $nama = $this->namaIndonesia();
 
+        // NIS dibuat lebih dulu karena dipakai sebagai password awal akun.
+        $nis = fake()->unique()->numerify('23103#####');
+
         $email = Str::slug($nama, '.').'.'.fake()->unique()->numerify('####').'@siswa.sch.id';
 
         return [
             'user_id' => User::factory()->siswa()->state([
                 'name' => $nama,
                 'email' => $email,
+                // Sesuai desain sistem: password awal siswa = NIS.
+                'password' => Hash::make((string) $nis),
             ]),
-            'nis' => fake()->unique()->numerify('23103#####'),
+            'nis' => $nis,
             'nama' => $nama,
             'phone' => fake()->unique()->numerify('08##########'),
         ];
